@@ -18,7 +18,7 @@ public class HelloWorld {
         });
 
         app.get("/", ctx -> {
-            var visited = Boolean.valueOf(ctx.cookie("visited"));
+            var visited = Boolean.parseBoolean(ctx.cookie("visited"));
             var page = new MainPage(visited);
             ctx.render("index.jte", model("page", page));
             ctx.cookie("visited", String.valueOf(true));
