@@ -4,6 +4,7 @@ import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 
 import org.example.hexlet.controller.CoursesController;
+import org.example.hexlet.controller.SessionsController;
 import org.example.hexlet.controller.UsersController;
 import org.example.hexlet.dto.MainPage;
 
@@ -18,11 +19,17 @@ public class HelloWorld {
         });
 
         app.get("/", ctx -> {
-            var visited = Boolean.parseBoolean(ctx.cookie("visited"));
-            var page = new MainPage(visited);
+            var page = new MainPage(ctx.sessionAttribute("currentUser"));
             ctx.render("index.jte", model("page", page));
-            ctx.cookie("visited", String.valueOf(true));
         });
+
+//        Sessions
+
+        app.get(NamedRoutes.buildSessionPath(), SessionsController::build);
+
+        app.post(NamedRoutes.sessionsPath(), SessionsController::create);
+
+        app.delete(NamedRoutes.sessionsPath(), SessionsController::destroy);
 
 //        Courses
 
