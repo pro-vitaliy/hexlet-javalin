@@ -12,8 +12,11 @@
         </form>
         <h1>Hello, Hexlet!</h1>
         <p>Main page</p>
-        @if(!page.isVisited())
-          Это сообщение показывается только один раз. Если вы хотите увидеть его снова, сотрите куки
+        @if(page.getCurrentUser() != null)
+          Welcome, ${page.getCurrentUser()}
+          Чтобы разлогиниться, удалите куку JSESSIONID из браузера
+        @else
+          <a href="${NamedRoutes.buildSessionPath()}">Login</a>
         @endif
     `
 )
