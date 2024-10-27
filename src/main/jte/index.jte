@@ -1,10 +1,13 @@
+@import org.example.hexlet.NamedRoutes
 @import org.example.hexlet.dto.MainPage
 @param MainPage page
 
 @template.layout.page(
   content = @`
-        <form action="/courses" method="get">
-          <input type="search" required name="term">
+        <form action="${NamedRoutes.coursesPath()}" method="get">
+          <label>
+            <input type="search" required name="term">
+          </label>
           <input type="submit" value="Искать">
         </form>
         <h1>Hello, Hexlet!</h1>

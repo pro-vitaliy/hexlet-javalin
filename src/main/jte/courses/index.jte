@@ -7,7 +7,9 @@
     content = @`
     <main>
         <form action="${NamedRoutes.coursesPath()}" method="get">
-            <input type="search" name="term" value="${page.getTerm()}" />
+            <label>
+                <input type="search" name="term" value="${page.getTerm()}" />
+            </label>
             <input type="submit" value="Искать">
         </form>
         <a href="${NamedRoutes.buildCoursePath()}">Add new course</a>
