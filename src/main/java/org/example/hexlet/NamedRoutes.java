@@ -2,6 +2,15 @@ package org.example.hexlet;
 
 public class NamedRoutes {
 
+//    Sessions
+
+    public static String sessionsPath() {
+        return "/sessions";
+    }
+
+    public static String buildSessionPath() {
+        return "/sessions/build";
+    }
 //    Users route
     public static String usersPath() {
         return "/users";
