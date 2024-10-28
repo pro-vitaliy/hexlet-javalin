@@ -24,6 +24,7 @@ public class CoursesController {
             filteredCourses = CourseRepository.getEntities();
         }
         var page = new CoursesPage(filteredCourses, term);
+        page.setFlash(ctx.consumeSessionAttribute("flash"));
         ctx.render("courses/index.jte", model("page", page));
     }
 
@@ -56,6 +57,7 @@ public class CoursesController {
                     .get();
             var course = new Course(nameCheck, descriptionCheck);
             CourseRepository.save(course);
+            ctx.sessionAttribute("flash", "Course has been created!");
             ctx.redirect(NamedRoutes.coursesPath());
         } catch (ValidationException e) {
             var page = new BuildCoursePage(name, description, e.getErrors());
