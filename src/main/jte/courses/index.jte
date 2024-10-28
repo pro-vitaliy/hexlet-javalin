@@ -4,6 +4,7 @@
 
 
 @template.layout.page(
+    page = page,
     content = @`
     <main>
         <form action="${NamedRoutes.coursesPath()}" method="get">
