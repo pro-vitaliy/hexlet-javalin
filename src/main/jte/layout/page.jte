@@ -1,6 +1,8 @@
 @import gg.jte.Content
 @import org.example.hexlet.NamedRoutes
+@import org.example.hexlet.dto.BasePage
 @param Content content
+@param BasePage page = null
 
 <!doctype html>
 <html lang="en">
@@ -33,6 +35,9 @@
       </div>
     </div>
   </nav>
+    @if(page != null && page.getFlash() != null)
+      <p>${page.getFlash()}</p>
+    @endif
     ${content}
   </body>
 </html>
