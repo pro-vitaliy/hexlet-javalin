@@ -10,12 +10,13 @@ import org.example.hexlet.dto.courses.CoursesPage;
 import org.example.hexlet.model.Course;
 import org.example.hexlet.repository.CourseRepository;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import static io.javalin.rendering.template.TemplateUtil.model;
 
 public class CoursesController {
-    public static void index(Context ctx) {
+    public static void index(Context ctx) throws SQLException {
         var term = ctx.queryParam("term");
         List<Course> filteredCourses;
         if (term != null) {
@@ -28,7 +29,7 @@ public class CoursesController {
         ctx.render("courses/index.jte", model("page", page));
     }
 
-    public static void show(Context ctx) {
+    public static void show(Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         var course = CourseRepository.find(id)
                 .orElseThrow(() -> new NotFoundResponse("Course with id " + id + " not found"));
@@ -36,20 +37,24 @@ public class CoursesController {
         ctx.render("courses/show.jte", model("page", page));
     }
 
-    public static void build(Context ctx) {
+    public static void build(Context ctx)  {
         var page = new BuildCoursePage();
         ctx.render("courses/build.jte", model("page", page));
     }
 
-    public static void create(Context ctx) {
+    public static void create(Context ctx) throws SQLException {
         var name = ctx.formParam("name").trim();
         var description = ctx.formParam("description");
 
         try {
             var nameCheck = ctx.formParamAsClass("name", String.class)
                     .check(value -> {
-                        return CourseRepository.getEntities().stream()
-                                .noneMatch(course -> course.getName().equals(value));
+                        try {
+                            return CourseRepository.getEntities().stream()
+                                    .noneMatch(course -> course.getName().equals(value));
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
                     }, "Course " + name + " already added")
                     .get();
             var descriptionCheck = ctx.formParamAsClass("description", String.class)
