@@ -5,3 +5,12 @@ CREATE TABLE courses (
     name VARCHAR(255) NOT NULL,
     description TEXT
 );
+
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(55)  NOT NULL,
+    email VARCHAR(55) NOT NULL,
+    password VARCHAR(55) NOT NULL
+);
